@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ESP32 Monitor Climático</title>
+
+  <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDmiM6oUtlqwGnLR8sR_tmFd0Laq6jU7_g",
+      authDomain: "expo-esp32-8e87c.firebaseapp.com",
+      projectId: "expo-esp32-8e87c",
+      storageBucket: "expo-esp32-8e87c.firebasestorage.app",
+      messagingSenderId: "965298464180",
+      appId: "1:965298464180:web:8c0a8e713a988096c43ee1",
+      measurementId: "G-E1JM6LBYVT"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="topnav">
+    <h1>ESP32 v3.2</h1>
+
+    <div id="authentication-bar" class="is-hidden">
+      <button id="settings-btn" class="settings-btn" title="Configuraci&oacute;n" aria-label="Configuraci&oacute;n">
+        &#9881;
+      </button>
+
+      <div id="settings-menu" class="settings-menu is-hidden">
+        <div class="settings-menu-content">
+          <div class="menu-user-info">
+            <span class="menu-label">Usuario:</span>
+            <span id="menu-user-email" class="menu-user-email">usuario@email.com</span>
+          </div>
+
+          <button id="logout-btn" class="logout-btn">Cerrar sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form id="login-form">
+    <div class="form-elements-container">
+      <label for="input-email"><b>Email</b></label>
+      <input type="text" placeholder="Usuario" id="input-email" required>
+
+      <label for="input-password"><b>Contraseña</b></label>
+      <input type="password" placeholder="Contraseña" id="input-password" required>
+
+      <button type="submit" id="login-button">Login</button>
+      <p id="error-message"></p>
+    </div>
+  </form>
+
+  <div class="content-sign-in is-hidden" id="content-sign-in">
+    <div class="wrap">
+      <div class="dashboard-card">
+        <div class="panel">
+          <div class="title">Temperatura</div>
+          <div class="temp" id="temp">--.- &deg;C</div>
+          <div class="chip" id="press">----.- hPa</div>
+          <div class="time" id="time">--:--:--</div>
+          <div class="date" id="date"></div>
+        </div>
+
+        <div class="panel">
+          <div class="title">Parametros</div>
+          <div class="kv"><div class="k">Temperatura</div><div class="v" id="t2">--.- &deg;C</div></div>
+          <div class="kv"><div class="k">Humedad</div><div class="v" id="hum">---%</div></div>
+          <div class="kv"><div class="k">Presión Atmosférica</div><div class="v" id="p2">----.- hPa</div></div>
+          <div class="kv"><div class="k">Hora</div><div class="v" id="date2"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/index.js"></script>
+  <script src="scripts/auth.js"></script>
+</body>
+</html>
