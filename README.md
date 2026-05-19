@@ -1,6 +1,6 @@
 # ExpoSP32 - Monitoreo de Sensores con ESP32 
 
-Proyecto educativo de electrónica e IoT que integra un microcontrolador ESP32 con sensores para capturar datos ambientales (temperatura, humedad y presión) y transmitirlos a través de una aplicación web en tiempo real usando Firebase.
+Proyecto educativo de electrónica e IoT que integra un microcontrolador ESP32 con un sensor DHT11 para capturar datos ambientales (temperatura y humedad) y transmitirlos a través de una aplicación web en tiempo real usando Firebase.
 
 ## Objetivo del Proyecto
 
@@ -13,7 +13,7 @@ Este proyecto fue desarrollado como una herramienta de aprendizaje para mejorar 
 ## Descripción General
 
 La aplicación consta de dos partes principales:
-1. **Firmware ESP32:** Lee sensores de temperatura, humedad y presión, y envía los datos a Firebase
+1. **Firmware ESP32:** Lee sensor DHT11 de temperatura y humedad, y envía los datos a Firebase
 2. **Dashboard Web:** Interfaz para visualizar los datos en tiempo real (basada en plantilla existente)
 
 ## Cambios Implementados por el Equipo
@@ -57,8 +57,7 @@ Las credenciales de Firebase se deben configurar en `public/index.html`
 UsersData
 └── {uid}
     ├── temperature: number
-    ├── humidity: number
-    └── pressure: number
+    └── humidity: number
 ```
 
 

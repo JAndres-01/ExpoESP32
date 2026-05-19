@@ -1,20 +1,17 @@
 /*
-  ESP32 + BME280 + Firebase Realtime Database
+  ESP32 + DHT11 + Firebase Realtime Database
 
-  Este sketch envia temperatura, humedad y presion a la ruta que usa la web:
+  Este sketch envia temperatura y humedad a la ruta que usa la web:
   UsersData/{USER_UID}/temperature
   UsersData/{USER_UID}/humidity
-  UsersData/{USER_UID}/pressure
 
   Librerias necesarias en Arduino IDE:
   - Firebase ESP Client by Mobizt
-  - Adafruit BME280 Library
-  - Adafruit Unified Sensor
+  - DHT sensor library by Adafruit
 */
 
 #include <WiFi.h>
-#include <Wire.h>
-#include <Adafruit_BME280.h>
+#include <DHT.h>
 #include <Firebase_ESP_Client.h>
 
 #include "addons/TokenHelper.h"
@@ -41,7 +38,9 @@ const unsigned long SEND_INTERVAL_MS = 5000;
 FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
-Adafruit_BME280 bme;
+#define DHTPIN 4
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
 
 unsigned long lastSend = 0;
 
@@ -73,18 +72,8 @@ void setupFirebase() {
 }
 
 void setupSensor() {
-  if (!bme.begin(0x76)) {
-    Serial.println("No se encontro el BME280 en 0x76. Probando 0x77...");
-
-    if (!bme.begin(0x77)) {
-      Serial.println("Error: revisa el cableado I2C del BME280.");
-      while (true) {
-        delay(1000);
-      }
-    }
-  }
-
-  Serial.println("BME280 listo.");
+  dht.begin();
+  Serial.println("DHT11 listo.");
 }
 
 bool sendFloat(const String& path, float value) {
@@ -100,9 +89,13 @@ bool sendFloat(const String& path, float value) {
 }
 
 void sendReadings() {
-  const float temperature = bme.readTemperature();
-  const float humidity = bme.readHumidity();
-  const float pressure = bme.readPressure() / 100.0F;
+  const float temperature = dht.readTemperature();
+  const float humidity = dht.readHumidity();
+
+  if (isnan(temperature) || isnan(humidity)) {
+    Serial.println("Error leyendo DHT11");
+    return;
+  }
 
   const String basePath = "/UsersData/" + String(USER_UID);
 
@@ -113,13 +106,9 @@ void sendReadings() {
   Serial.print("Humedad: ");
   Serial.print(humidity);
   Serial.println(" %");
-  Serial.print("Presion: ");
-  Serial.print(pressure);
-  Serial.println(" hPa");
 
   sendFloat(basePath + "/temperature", temperature);
   sendFloat(basePath + "/humidity", humidity);
-  sendFloat(basePath + "/pressure", pressure);
 }
 
 void setup() {

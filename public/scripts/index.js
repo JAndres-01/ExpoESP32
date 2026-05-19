@@ -5,7 +5,6 @@ const menuUserEmail = document.querySelector('#menu-user-email');
 
 const sensorElements = {
   temperature: [document.getElementById('temp'), document.getElementById('t2')],
-  pressure: [document.getElementById('press'), document.getElementById('p2')],
   humidity: [document.getElementById('hum')],
 };
 
@@ -52,7 +51,6 @@ const updateClock = () => {
 
 const resetSensorValues = () => {
   sensorElements.temperature.forEach((element) => setText(element, '--.- \u00b0C'));
-  sensorElements.pressure.forEach((element) => setText(element, '----.- hPa'));
   sensorElements.humidity.forEach((element) => setText(element, '---%'));
 };
 
@@ -102,7 +100,6 @@ const setupUI = (user) => {
   readingsRef = db.ref(`UsersData/${user.uid}`);
   listenToReading('temperature', '\u00b0C');
   listenToReading('humidity', '%');
-  listenToReading('pressure', 'hPa');
 };
 
 updateClock();
