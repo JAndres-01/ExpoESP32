@@ -14,14 +14,6 @@ const date2Element = document.getElementById('date2');
 
 let readingsRef = null;
 
-document.addEventListener(
-  'touchmove',
-  (event) => {
-    event.preventDefault();
-  },
-  { passive: false }
-);
-
 const setText = (element, value) => {
   if (element) element.textContent = value;
 };

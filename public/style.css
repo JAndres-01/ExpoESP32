@@ -17,13 +17,12 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   margin: 0;
   font-family: Inter, system-ui, -apple-system, sans-serif;
   color: var(--text);
-  overflow: hidden;
-  overscroll-behavior: none;
+  overflow-x: hidden;
 }
 
 html {
@@ -33,15 +32,15 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
   min-height: 100vh;
+  min-height: 100svh;
   min-height: 100dvh;
+  padding-bottom: env(safe-area-inset-bottom);
   background: radial-gradient(900px 600px at 20% 10%, rgba(120, 120, 255, 0.12), transparent 60%),
     radial-gradient(900px 600px at 80% 90%, rgba(255, 120, 200, 0.1), transparent 60%),
     linear-gradient(135deg, #0b1020, #0e1628);
   max-width: 100vw;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 /* TOP NAVIGATION */
@@ -51,7 +50,7 @@ body {
   border-bottom: 1px solid var(--border);
   color: white;
   font-size: 1.1rem;
-  padding: 14px max(20px, env(safe-area-inset-right)) 14px max(24px, env(safe-area-inset-left));
+  padding: calc(14px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) 14px calc(24px + env(safe-area-inset-left));
   backdrop-filter: blur(10px);
   position: relative;
   z-index: 1000;
@@ -100,6 +99,7 @@ body {
   line-height: 1;
   cursor: pointer;
   transition: 0.2s ease;
+  
 }
 
 .settings-btn:hover {
@@ -125,7 +125,11 @@ body {
   backdrop-filter: blur(38px) saturate(1.25);
   -webkit-backdrop-filter: blur(38px) saturate(1.25);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.48);
-  animation: slideDown 0.3s ease;
+  animation: slideDown 0.2s ease;
+}
+
+.settings-menu-out {
+  animation: slideUp 0.2s ease-out forwards;
 }
 
 @keyframes slideDown {
@@ -139,6 +143,17 @@ body {
   }
 }
 
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
 .settings-menu-content {
   padding: 16px;
   overflow: hidden;
@@ -148,7 +163,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-bottom: 14px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
@@ -198,8 +212,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px;
+  padding: 24px calc(24px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) calc(24px + env(safe-area-inset-left));
   width: 100%;
+  min-height: 0;
 }
 
 .form-elements-container {
@@ -285,25 +300,25 @@ button:active {
 
 /* CONTENT SECTION */
 .content-sign-in {
-  padding: 24px;
+  padding: 24px calc(24px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) calc(24px + env(safe-area-inset-left));
   display: grid;
   place-items: center;
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   position: relative;
   z-index: 1;
 }
 
 .wrap {
-  height: 100%;
+  min-height: 100%;
   display: grid;
   place-items: center;
   padding: 24px;
   width: 100%;
-  min-height: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .dashboard-card {
@@ -391,7 +406,7 @@ button:active {
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .topnav {
-    padding: 12px max(12px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+    padding: calc(12px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) 12px calc(16px + env(safe-area-inset-left));
     min-height: 62px;
   }
 
@@ -410,17 +425,19 @@ button:active {
     max-width: 100%;
   }
 
-  .content-sign-in,
+  .content-sign-in {
+    padding: 12px calc(12px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left));
+  }
+
   .wrap {
     padding: 12px;
   }
 
   .dashboard-card {
-    max-height: 100%;
     gap: 10px;
     padding: 12px;
     border-radius: 18px;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .panel {
@@ -444,7 +461,7 @@ button:active {
 
 @media (max-width: 380px), (max-height: 700px) {
   .topnav {
-    padding-top: 10px;
+    padding-top: calc(10px + env(safe-area-inset-top));
     padding-bottom: 10px;
     min-height: 58px;
   }
@@ -453,7 +470,10 @@ button:active {
     font-size: 1rem;
   }
 
-  .content-sign-in,
+  .content-sign-in {
+    padding: 8px calc(8px + env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) calc(8px + env(safe-area-inset-left));
+  }
+
   .wrap {
     padding: 8px;
   }

@@ -1,0 +1,11 @@
+{
+  "name": "exposp32",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite public --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}
