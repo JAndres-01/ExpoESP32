@@ -1,15 +1,4 @@
-/*
-
-  Librerias necesarias en Arduino IDE:
-  - Firebase ESP Client by Mobizt
-  - DHT sensor library by Adafruit
-  - Adafruit Unified Sensor
-
-  Antes de subir:
-  1. Cambiar WIFI_SSID y WIFI_PASSWORD.
-  3. Conectar el DHT11: VCC a 3.3V, GND a GND y DATA a GPIO 4.
-*/
-
+#include <Arduino.h>
 #include <WiFi.h>
 #include <DHT.h>
 #include <Firebase_ESP_Client.h>
@@ -33,7 +22,6 @@
 #define DHTPIN 4
 #define DHTTYPE DHT11
 
-// Intervalo de envio a Firebase.
 const unsigned long SEND_INTERVAL_MS = 10000;
 
 FirebaseData fbdo;

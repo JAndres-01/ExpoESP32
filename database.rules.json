@@ -2,7 +2,7 @@
   "rules": {
     "UsersData": {
       "$uid": {
-        ".read": "auth.uid === $uid",
+        ".read": "$uid === 'vNtCE0HypCXzySzs2JmSxL5adNn1'",
         ".write": "auth.uid === $uid"
       }
     }
