@@ -1,5 +1,4 @@
 const USER_UID = 'vNtCE0HypCXzySzs2JmSxL5adNn1';
-const contentElement = document.querySelector('#content-sign-in');
 
 const sensorElements = {
   temperature: [document.getElementById('temp')],
@@ -216,7 +215,6 @@ const setupUI = () => {
   }
   clearSensorTimers();
 
-  contentElement.classList.remove('is-hidden');
   resetSensorValues();
   setSensorStatus(false);
   readingsRef = db.ref(`UsersData/${USER_UID}`);
