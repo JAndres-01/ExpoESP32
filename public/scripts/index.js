@@ -150,8 +150,8 @@ const showReadings = (readings) => {
 const showReadingsError = (error, shouldStop = true) => {
   console.error('Error leyendo sensores:', error);
   if (shouldStop) clearSensorTimers();
-  setSensorMessage(error?.code === 'PERMISSION_DENIED' || error?.message?.includes('401') ? 'Sin permiso' : 'Error');
-  Object.values(sensorElements).flat().forEach((element) => setText(element, 'Error'));
+  const isPermissionError = error?.code === 'PERMISSION_DENIED' || error?.message?.includes('401');
+  markSensorsOffline(isPermissionError ? 'Sin permiso' : 'Sin conexion');
 };
 
 const getReadingsUrl = () => {
